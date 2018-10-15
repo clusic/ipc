@@ -1,0 +1,12 @@
+{
+  "name": "@clusic/ipc",
+  "version": "1.0.0",
+  "description": "An ipc-message classic model of node application framework for clusic",
+  "main": "index.js",
+  "author": "cevio",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/clusic/ipc.git"
+  }
+}
