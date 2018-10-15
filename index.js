@@ -13,14 +13,22 @@ const [install, onMessage, workers, agents, pid, type, collect, sending] = [
 ];
 
 module.exports = class IPC extends EventEmitter {
-  constructor() {
+  constructor(isAgent) {
     super();
     this[workers] = [];
     this[agents] = {};
     this[pid] = process.pid;
-    this[type] = cluster.isMaster ? 'master' : (cluster.isWorker ? 'worker': 'agent');
+    this[type] = isAgent ? 'agent' : (cluster.isMaster ? 'master' : (cluster.isWorker ? 'worker': 'agent'));
     this[install]();
     this[onMessage](process);
+  }
+  
+  get workers() {
+    return this[workers];
+  }
+  
+  get agents() {
+    return this[agents];
   }
   
   register(name, agent) {
@@ -32,7 +40,7 @@ module.exports = class IPC extends EventEmitter {
   
   send(to, action, body, socket) {
     if (!Array.isArray(to)) to = [to];
-    if (this.type === 'master') {
+    if (this[type] === 'master') {
       const workers = this[collect](to, this[pid]);
       return this[sending](workers, {
         action, body,
@@ -89,8 +97,8 @@ module.exports = class IPC extends EventEmitter {
       }
     }
     return Array
-      .from(new Set(result))
-      .filter(pos => (pos.process || pos).pid !== excludeProcessId);
+    .from(new Set(result))
+    .filter(pos => (pos.process || pos).pid !== excludeProcessId);
   }
   
   [onMessage](child) {
