@@ -1,6 +1,6 @@
 {
   "name": "@clusic/ipc",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "An ipc-message classic model of node application framework for clusic",
   "main": "index.js",
   "author": "cevio",

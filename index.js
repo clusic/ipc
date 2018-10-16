@@ -90,10 +90,10 @@ module.exports = class IPC extends EventEmitter {
             }
         }
       } else if (typeof includeProcesses[i] === 'number') {
-        const agents = Object.values(this[agents]).filter(ag => ag.pid === includeProcesses[i]);
-        const workers = this[workers].filter(wk => wk.process.pid === includeProcesses[i]);
-        if (workers.length) result.push(...workers);
-        if (agents.length) result.push(...agents);
+        const _agents = Object.values(this[agents]).filter(ag => ag.pid === includeProcesses[i]);
+        const _workers = this[workers].filter(wk => wk.process.pid === includeProcesses[i]);
+        if (_workers.length) result.push(..._workers);
+        if (_agents.length) result.push(..._agents);
       }
     }
     return Array
